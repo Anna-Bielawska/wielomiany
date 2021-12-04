@@ -11,24 +11,47 @@ wspolczynniki = arr[1:]
 stopien = int(arr[0])
 tekst = ''
 
-for ind, wsp in enumerate(wspolczynniki):
+for ind, wsp in enumerate(reversed(wspolczynniki)):
+    ind = stopien - ind
+
     if wsp == int(wsp):
         wsp = int(wsp)
 
     if ind == 0:
-        tekst = f'{wsp}'
+        if wsp > 0:
+            tekst += f' + {wsp}'
+        if wsp < 0:
+            tekst += f' {wsp}'
         continue
+    if ind == 1:
+        if wsp > 0:
+            tekst += f' + {wsp}x'
+        if wsp < 0:
+            tekst += f' {wsp}x'
+        continue
+    if ind == stopien:
+        if wsp > 0:
+            if wsp == 1: 
+                tekst += f'x^{stopien}'
+            else:
+                tekst += f'{wsp}x^{stopien}'
+        if wsp < 0:
+            if wsp == -1:
+                tekst += f'-x^{stopien}'
+            else:
+                tekst += f'{wsp}x^{stopien}'
+        continue
+
     if wsp > 0:
         if wsp == 1:
-            tekst += f'+x^{ind}'
+            tekst += f' + x^{ind}'
         else:
-            tekst += f'+{wsp}x^{ind}'
-        # tekst.join(f'+{wsp}x^{ind}')
+            tekst += f' + {wsp}x^{ind}'
     if wsp < 0:
         if wsp == -1:
-            tekst += f'-x^{ind}'
+            tekst += f' -x^{ind}'
         else:
-            tekst += f'{wsp}x^{ind}'
+            tekst += f' {wsp}x^{ind}'
 
 if len(wspolczynniki) > stopien + 1:
     print("Wystąpił błąd w pliku, liczba współczynników wielomianu jest za duża.")
@@ -106,7 +129,7 @@ def newton(f, Df, x0, epsilon, n_steps=500, h=1e-6):
                     pierw = str(pierw).strip('(').strip(')')
                     koniec += f"{pierw},"
 
-            print('\n'+tekst + f", pierwiastki: {koniec}")
+            print('\n'+tekst + f" , pierwiastki: {koniec}")
 
             return 0
 
